@@ -121,6 +121,7 @@
             // txtProductName
             // 
             txtProductName.BorderStyle = BorderStyle.FixedSingle;
+            txtProductName.Cursor = Cursors.Hand;
             txtProductName.Location = new Point(110, 69);
             txtProductName.Name = "txtProductName";
             txtProductName.Size = new Size(252, 23);
@@ -129,6 +130,7 @@
             // txtQuantity
             // 
             txtQuantity.BorderStyle = BorderStyle.FixedSingle;
+            txtQuantity.Cursor = Cursors.Hand;
             txtQuantity.Location = new Point(110, 239);
             txtQuantity.Name = "txtQuantity";
             txtQuantity.Size = new Size(252, 23);
@@ -137,6 +139,7 @@
             // txtSellPrice
             // 
             txtSellPrice.BorderStyle = BorderStyle.FixedSingle;
+            txtSellPrice.Cursor = Cursors.Hand;
             txtSellPrice.Location = new Point(110, 281);
             txtSellPrice.Name = "txtSellPrice";
             txtSellPrice.Size = new Size(252, 23);
@@ -144,6 +147,7 @@
             // 
             // cbCategory
             // 
+            cbCategory.Cursor = Cursors.Hand;
             cbCategory.FormattingEnabled = true;
             cbCategory.Location = new Point(110, 107);
             cbCategory.Name = "cbCategory";
