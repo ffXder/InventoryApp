@@ -18,6 +18,11 @@ namespace Inventory
         {
             try
             {
+                if (string.IsNullOrEmpty(txtProductName.Text) || string.IsNullOrEmpty(cbCategory.Text) || string.IsNullOrEmpty(txtQuantity.Text) || string.IsNullOrEmpty(txtSellPrice.Text))
+                {
+                    MessageBox.Show("Please fill in all required fields.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
                 _ProductName = Product_Name(txtProductName.Text);
                 _Category = cbCategory.SelectedItem.ToString();
                 _ManufacturingDate = dtPickerMfgDate.Value.ToString("yyyy-MM-dd");
@@ -30,14 +35,21 @@ namespace Inventory
                 gridViewProductList.DataSource = showProductList;
             }
 
-            catch (Exception)
+            catch (CurrencyFormatException cfEx)
             {
-                MessageBox.Show("Please enter a valid product name and select a category.", "Invalid Input", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(cfEx.Message, "CurrencyFormatException", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
+            catch (NumberFormatException nfEx)
+            {
+                MessageBox.Show(nfEx.Message, "NumberFormatException", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (StringFormatException sfEx)
+            {
+                MessageBox.Show(sfEx.Message, "StringFormatException", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
             finally
             {
-
+                Console.WriteLine("Product added successfully");
             }
         }
 
@@ -66,28 +78,29 @@ namespace Inventory
         {
             if (!Regex.IsMatch(name, @"^[a-zA-Z]+$"))
             {
-
-            }
                 //Exception here
+                throw new StringFormatException("Product Name must contain only letters.");
+            }
                 return name;
         }
         public int Quantity(string qty)
         {
             if (!Regex.IsMatch(qty, @"^[0-9]"))
             {
-
-            }
                 //Exception here
+                throw new NumberFormatException("Quantity must contain only numbers.");
+            }
                 return Convert.ToInt32(qty);
         }
         public double SellingPrice(string price)
         {
             if (!Regex.IsMatch(price.ToString(), @"^(\d*\.)?\d+$"))
             {
-
-            }
                 //Exception here
-                return Convert.ToDouble(price);
+                throw new CurrencyFormatException("Selling Price must be in currency format.");
+            }
+
+            return Convert.ToDouble(price);
         }
     }
 }
