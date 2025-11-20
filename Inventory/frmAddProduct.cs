@@ -4,7 +4,7 @@ namespace Inventory
 {
     public partial class frmAddProduct : Form
     {
-        private InventoryQuery inventoryQuery;
+        private ProductService productService;
         private string _ProductName, _Category, _ManufacturingDate, _ExpirationDate, _Description;
         private int _Quantity;
         private double _SellPrice;
@@ -17,9 +17,9 @@ namespace Inventory
 
         public void RefreshList()
         {
-            inventoryQuery.DisplayProduct();
+            List<ProductsModel> products = productService.GetAllProducts();
             gridViewProductList.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            gridViewProductList.DataSource = inventoryQuery.bindingSource;
+            gridViewProductList.DataSource = products;
         }
 
         public void ClearInput()
@@ -33,46 +33,19 @@ namespace Inventory
             richTxtDescription.Clear();
         }
 
-        public bool getProductInfo()
+        public void DisplayProducts()
         {
-            try
-            {
-                if (string.IsNullOrEmpty(txtProductName.Text) || string.IsNullOrEmpty(cbCategory.Text) || string.IsNullOrEmpty(txtQuantity.Text) || string.IsNullOrEmpty(txtSellPrice.Text))
-                {
-                    MessageBox.Show("Please fill in all required fields.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return false;
-                }
-
-
-                _ProductName = txtProductName.Text;
-                _Category = cbCategory.Text;
-                _ManufacturingDate = dtPickerMfgDate.Value.ToString("yyyy-MM-dd");
-                _ExpirationDate = dtPickerExpDate.Value.ToString("yyyy-MM-dd");
-                _Quantity = Convert.ToInt32(txtQuantity.Text);
-                _SellPrice = Convert.ToDouble(txtSellPrice.Text);
-                _Description = richTxtDescription.Text;
-
-
-                inventoryQuery.AddProduct(_ProductName, _Category, _ManufacturingDate, _ExpirationDate, _SellPrice, _Quantity, _Description);
-
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Error adding product: " + ex.Message);
-                return false;
-            }
+            productService.GetAllProducts();
+            gridViewProductList.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            gridViewProductList.DataSource = productService;
         }
 
         public void btnAddProduct_Click(object sender, EventArgs e)
         {
             try
             {
+               
                 
-                bool isValid = getProductInfo();
-                if (!isValid)
-                    return;
-
                 
                 MessageBox.Show("Product successfully added!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -117,7 +90,7 @@ namespace Inventory
 
             cbCategory.Items.AddRange(ListOfProductCategory);
 
-            inventoryQuery = new InventoryQuery();
+            productService = new ProductService();
             RefreshList();
         }
 
