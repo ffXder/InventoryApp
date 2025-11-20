@@ -4,35 +4,83 @@ namespace Inventory
 {
     public partial class frmAddProduct : Form
     {
+        private InventoryQuery inventoryQuery;
         private string _ProductName, _Category, _ManufacturingDate, _ExpirationDate, _Description;
         private int _Quantity;
         private double _SellPrice;
-        BindingSource showProductList;
+        
         public frmAddProduct()
         {
             InitializeComponent();
-            showProductList = new BindingSource();
+
         }
 
-        public void btnAddProduct_Click(object sender, EventArgs e)
+        public void RefreshList()
+        {
+            inventoryQuery.DisplayProduct();
+            gridViewProductList.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            gridViewProductList.DataSource = inventoryQuery.bindingSource;
+        }
+
+        public void ClearInput()
+        {
+            txtProductName.Clear();
+            cbCategory.SelectedIndex = -1;
+            dtPickerMfgDate.Value = DateTime.Now;
+            dtPickerExpDate.Value = DateTime.Now;
+            txtSellPrice.Clear();
+            txtQuantity.Clear();
+            richTxtDescription.Clear();
+        }
+
+        public bool getProductInfo()
         {
             try
             {
                 if (string.IsNullOrEmpty(txtProductName.Text) || string.IsNullOrEmpty(cbCategory.Text) || string.IsNullOrEmpty(txtQuantity.Text) || string.IsNullOrEmpty(txtSellPrice.Text))
                 {
                     MessageBox.Show("Please fill in all required fields.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
+                    return false;
                 }
-                _ProductName = Product_Name(txtProductName.Text);
-                _Category = cbCategory.SelectedItem.ToString();
+
+
+                _ProductName = txtProductName.Text;
+                _Category = cbCategory.Text;
                 _ManufacturingDate = dtPickerMfgDate.Value.ToString("yyyy-MM-dd");
                 _ExpirationDate = dtPickerExpDate.Value.ToString("yyyy-MM-dd");
+                _Quantity = Convert.ToInt32(txtQuantity.Text);
+                _SellPrice = Convert.ToDouble(txtSellPrice.Text);
                 _Description = richTxtDescription.Text;
-                _Quantity = Quantity(txtQuantity.Text);
-                _SellPrice = SellingPrice(txtSellPrice.Text);
-                showProductList.Add(new ProductClass(_ProductName, _Category, _ManufacturingDate, _ExpirationDate, _SellPrice, _Quantity, _Description));
-                gridViewProductList.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-                gridViewProductList.DataSource = showProductList;
+
+
+                inventoryQuery.AddProduct(_ProductName, _Category, _ManufacturingDate, _ExpirationDate, _SellPrice, _Quantity, _Description);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error adding product: " + ex.Message);
+                return false;
+            }
+        }
+
+        public void btnAddProduct_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                
+                bool isValid = getProductInfo();
+                if (!isValid)
+                    return;
+
+                
+                MessageBox.Show("Product successfully added!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                
+                RefreshList();
+
+                
+                ClearInput();
             }
 
             catch (CurrencyFormatException cfEx)
@@ -67,11 +115,10 @@ namespace Inventory
                 "Other"
             };
 
-            foreach(string category in ListOfProductCategory)
-            {
-                cbCategory.Items.Add(category);
-            }
+            cbCategory.Items.AddRange(ListOfProductCategory);
 
+            inventoryQuery = new InventoryQuery();
+            RefreshList();
         }
 
         public string Product_Name(string name)

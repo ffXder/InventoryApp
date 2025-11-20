@@ -10,7 +10,7 @@ namespace Inventory
     {
         public StringFormatException(string message) : base(message)
         {
-            Console.WriteLine("This is custom Exception"); //tryy lang poo
+            Console.WriteLine("This is StringFormatException"); //tryy lang poo
         }
     }
 }

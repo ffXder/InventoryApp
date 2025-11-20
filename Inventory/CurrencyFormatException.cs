@@ -10,7 +10,7 @@ namespace Inventory
     {
         public CurrencyFormatException(string message) : base(message)
         {
-            Console.WriteLine("This is custom Exception"); //tryy lang poo
+            Console.WriteLine("This is CurrencyFormatException"); //tryy lang poo
         }
     }
 }
