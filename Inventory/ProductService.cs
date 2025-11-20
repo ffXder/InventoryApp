@@ -13,16 +13,23 @@ namespace Inventory
             bindingSource = new BindingSource();
         }
 
+        // insert
         public void AddProduct(ProductsModel product)
         {
             var productsCollection = dbConnection.GetProductsCollection();
             productsCollection.InsertOne(product);
         }
 
+        // read
         public List<ProductsModel> GetAllProducts()
         {
             var productsCollection = dbConnection.GetProductsCollection();
             return productsCollection.Find(_ => true).ToList();
         }
+
+        // update
+       
+
+        // delete
     }
 }

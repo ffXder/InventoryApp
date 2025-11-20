@@ -8,7 +8,7 @@ namespace Inventory
         private string _ProductName, _Category, _ManufacturingDate, _ExpirationDate, _Description;
         private int _Quantity;
         private double _SellPrice;
-        
+
         public frmAddProduct()
         {
             InitializeComponent();
@@ -35,25 +35,46 @@ namespace Inventory
 
         public void DisplayProducts()
         {
-            productService.GetAllProducts();
-            gridViewProductList.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            gridViewProductList.DataSource = productService;
+
         }
 
         public void btnAddProduct_Click(object sender, EventArgs e)
         {
             try
             {
-               
-                
-                
+
+                string name = Product_Name(txtProductName.Text);
+                string category = cbCategory.SelectedItem?.ToString() ?? "";
+                string mfgDate = dtPickerMfgDate.Value.ToString("yyyy-MM-dd");
+                string expDate = dtPickerExpDate.Value.ToString("yyyy-MM-dd");
+                string description = richTxtDescription.Text;
+                int quantity = Quantity(txtQuantity.Text);
+                double sellPrice = SellingPrice(txtSellPrice.Text);
+
+
+                ProductsModel newProduct = new ProductsModel
+                {
+                    ProductName = name,
+                    Category = category,
+                    ManufacturingDate = mfgDate,
+                    ExpirationDate = expDate,
+                    Description = description,
+                    Quantity = quantity,
+                    SellPrice = sellPrice
+                };
+
+
+                productService.AddProduct(newProduct);
+
+
                 MessageBox.Show("Product successfully added!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                
-                RefreshList();
 
-                
+                //RefreshList();
+
+
                 ClearInput();
+               
             }
 
             catch (CurrencyFormatException cfEx)
@@ -64,10 +85,7 @@ namespace Inventory
             {
                 MessageBox.Show(nfEx.Message, "NumberFormatException", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            catch (StringFormatException sfEx)
-            {
-                MessageBox.Show(sfEx.Message, "StringFormatException", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+
             finally
             {
                 Console.WriteLine("Product added successfully");
@@ -91,7 +109,7 @@ namespace Inventory
             cbCategory.Items.AddRange(ListOfProductCategory);
 
             productService = new ProductService();
-            RefreshList();
+            //RefreshList();
         }
 
         public string Product_Name(string name)
@@ -101,7 +119,7 @@ namespace Inventory
                 //Exception here
                 throw new StringFormatException("Product Name must contain only letters.");
             }
-                return name;
+            return name;
         }
         public int Quantity(string qty)
         {
@@ -110,7 +128,7 @@ namespace Inventory
                 //Exception here
                 throw new NumberFormatException("Quantity must contain only numbers.");
             }
-                return Convert.ToInt32(qty);
+            return Convert.ToInt32(qty);
         }
         public double SellingPrice(string price)
         {
@@ -122,5 +140,7 @@ namespace Inventory
 
             return Convert.ToDouble(price);
         }
+
+
     }
 }
