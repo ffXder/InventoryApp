@@ -16,6 +16,7 @@ namespace Inventory
         public FrmInventory()
         {
             InitializeComponent();
+            gridViewProductList.CellContentDoubleClick += gridViewProductList_CellContentClick;
         }
 
         public void RefreshList()
@@ -45,15 +46,15 @@ namespace Inventory
 
         private void btnFind_Click(object sender, EventArgs e)
         {
-            int objectId = Convert.ToInt32(txtFind.Text);
-            var findProduct = productService.FindProductbyId(objectId);
-
-            if (objectId == 0)
+            
+            if (int.TryParse(txtFind.Text.Trim(), out int objectId))
             {
                 MessageBox.Show("Please enter a Product ID to search.", "Validation Error",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+
+            var findProduct = productService.FindProductbyId(objectId);
 
             if (findProduct != null)
             {
@@ -68,7 +69,7 @@ namespace Inventory
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-           
+
             if (gridViewProductList.SelectedRows.Count == 0)
             {
                 MessageBox.Show("Please select a product to delete.");
@@ -89,7 +90,7 @@ namespace Inventory
             {
                 productService.DeleteProduct(productId);
                 MessageBox.Show("Product deleted successfully!");
-                DisplayProduct(); 
+                DisplayProduct();
             }
         }
 
@@ -101,7 +102,7 @@ namespace Inventory
                 return;
             }
 
-            int productId = Convert.ToInt32(gridViewProductList.SelectedRows[0].Cells["ProductId"].Value);  
+            int productId = Convert.ToInt32(gridViewProductList.SelectedRows[0].Cells["ProductId"].Value);
 
             ProductsModel product = productService.FindProductbyId(productId);
 
@@ -122,5 +123,24 @@ namespace Inventory
             DisplayProduct();
         }
 
+        //double click the cell to update 
+        private void gridViewProductList_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return; // ignore header clicks
+
+            int productId = Convert.ToInt32(gridViewProductList.Rows[e.RowIndex].Cells["ProductId"].Value);
+
+            ProductsModel product = productService.FindProductbyId(productId);
+
+            if (product != null)
+            {
+                FrmUpdateProduct frmUpdateProduct = new FrmUpdateProduct(product);
+                frmUpdateProduct.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Product not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 }
