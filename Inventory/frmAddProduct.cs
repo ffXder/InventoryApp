@@ -5,7 +5,7 @@ namespace Inventory
     public partial class frmAddProduct : Form
     {
         private ProductService productService;
-        private string _ProductName, _Category, _ManufacturingDate, _ExpirationDate, _Description;
+        private string _ProductId ,_ProductName, _Category, _ManufacturingDate, _ExpirationDate, _Description;
         private int _Quantity;
         private double _SellPrice;
 
@@ -15,15 +15,9 @@ namespace Inventory
 
         }
 
-        public void RefreshList()
-        {
-            List<ProductsModel> products = productService.GetAllProducts();
-            gridViewProductList.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            gridViewProductList.DataSource = products;
-        }
-
         public void ClearInput()
         {
+            txtProductId.Clear();
             txtProductName.Clear();
             cbCategory.SelectedIndex = -1;
             dtPickerMfgDate.Value = DateTime.Now;
@@ -42,25 +36,27 @@ namespace Inventory
         {
             try
             {
-
-                string name = Product_Name(txtProductName.Text);
-                string category = cbCategory.SelectedItem?.ToString() ?? "";
-                string mfgDate = dtPickerMfgDate.Value.ToString("yyyy-MM-dd");
-                string expDate = dtPickerExpDate.Value.ToString("yyyy-MM-dd");
-                string description = richTxtDescription.Text;
-                int quantity = Quantity(txtQuantity.Text);
-                double sellPrice = SellingPrice(txtSellPrice.Text);
+                //get values from input fields
+                _ProductId = txtProductId.Text;
+                _ProductName = Product_Name(txtProductName.Text);
+                _Category = cbCategory.SelectedItem?.ToString() ?? "";
+                _ManufacturingDate = dtPickerMfgDate.Value.ToString("yyyy-MM-dd");
+                _ExpirationDate = dtPickerExpDate.Value.ToString("yyyy-MM-dd");
+                _Description = richTxtDescription.Text;
+                _Quantity = Quantity(txtQuantity.Text);
+                _SellPrice = SellingPrice(txtSellPrice.Text);
 
 
                 ProductsModel newProduct = new ProductsModel
                 {
-                    ProductName = name,
-                    Category = category,
-                    ManufacturingDate = mfgDate,
-                    ExpirationDate = expDate,
-                    Description = description,
-                    Quantity = quantity,
-                    SellPrice = sellPrice
+                    ProductId = _ProductId ,
+                    ProductName = _ProductName,
+                    Category = _Category,
+                    ManufacturingDate = _ManufacturingDate,
+                    ExpirationDate = _ExpirationDate,
+                    Description = _Description,
+                    Quantity = _Quantity,
+                    SellPrice = _SellPrice
                 };
 
 

@@ -44,8 +44,8 @@
             label9 = new Label();
             richTxtDescription = new RichTextBox();
             btnAddProduct = new Button();
-            gridViewProductList = new DataGridView();
-            ((System.ComponentModel.ISupportInitialize)gridViewProductList).BeginInit();
+            label8 = new Label();
+            txtProductId = new TextBox();
             SuspendLayout();
             // 
             // label1
@@ -62,7 +62,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label2.Location = new Point(12, 69);
+            label2.Location = new Point(21, 107);
             label2.Name = "label2";
             label2.Size = new Size(60, 20);
             label2.TabIndex = 1;
@@ -72,7 +72,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label3.Location = new Point(12, 107);
+            label3.Location = new Point(21, 145);
             label3.Name = "label3";
             label3.Size = new Size(69, 20);
             label3.TabIndex = 2;
@@ -82,7 +82,7 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label4.Location = new Point(12, 148);
+            label4.Location = new Point(21, 186);
             label4.Name = "label4";
             label4.Size = new Size(75, 20);
             label4.TabIndex = 3;
@@ -92,7 +92,7 @@
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label5.Location = new Point(12, 192);
+            label5.Location = new Point(21, 230);
             label5.Name = "label5";
             label5.Size = new Size(72, 20);
             label5.TabIndex = 4;
@@ -102,7 +102,7 @@
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label6.Location = new Point(12, 239);
+            label6.Location = new Point(21, 277);
             label6.Name = "label6";
             label6.Size = new Size(35, 20);
             label6.TabIndex = 5;
@@ -112,7 +112,7 @@
             // 
             label7.AutoSize = true;
             label7.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label7.Location = new Point(12, 281);
+            label7.Location = new Point(21, 319);
             label7.Name = "label7";
             label7.Size = new Size(69, 20);
             label7.TabIndex = 6;
@@ -122,7 +122,7 @@
             // 
             txtProductName.BorderStyle = BorderStyle.FixedSingle;
             txtProductName.Cursor = Cursors.Hand;
-            txtProductName.Location = new Point(110, 69);
+            txtProductName.Location = new Point(119, 107);
             txtProductName.Name = "txtProductName";
             txtProductName.Size = new Size(252, 23);
             txtProductName.TabIndex = 7;
@@ -131,7 +131,7 @@
             // 
             txtQuantity.BorderStyle = BorderStyle.FixedSingle;
             txtQuantity.Cursor = Cursors.Hand;
-            txtQuantity.Location = new Point(110, 239);
+            txtQuantity.Location = new Point(119, 277);
             txtQuantity.Name = "txtQuantity";
             txtQuantity.Size = new Size(252, 23);
             txtQuantity.TabIndex = 8;
@@ -140,7 +140,7 @@
             // 
             txtSellPrice.BorderStyle = BorderStyle.FixedSingle;
             txtSellPrice.Cursor = Cursors.Hand;
-            txtSellPrice.Location = new Point(110, 281);
+            txtSellPrice.Location = new Point(119, 319);
             txtSellPrice.Name = "txtSellPrice";
             txtSellPrice.Size = new Size(252, 23);
             txtSellPrice.TabIndex = 9;
@@ -149,7 +149,7 @@
             // 
             cbCategory.Cursor = Cursors.Hand;
             cbCategory.FormattingEnabled = true;
-            cbCategory.Location = new Point(110, 107);
+            cbCategory.Location = new Point(119, 145);
             cbCategory.Name = "cbCategory";
             cbCategory.Size = new Size(252, 23);
             cbCategory.TabIndex = 10;
@@ -157,7 +157,7 @@
             // dtPickerMfgDate
             // 
             dtPickerMfgDate.Cursor = Cursors.Hand;
-            dtPickerMfgDate.Location = new Point(110, 148);
+            dtPickerMfgDate.Location = new Point(119, 186);
             dtPickerMfgDate.Name = "dtPickerMfgDate";
             dtPickerMfgDate.Size = new Size(252, 23);
             dtPickerMfgDate.TabIndex = 11;
@@ -165,7 +165,7 @@
             // dtPickerExpDate
             // 
             dtPickerExpDate.Cursor = Cursors.Hand;
-            dtPickerExpDate.Location = new Point(110, 192);
+            dtPickerExpDate.Location = new Point(119, 230);
             dtPickerExpDate.Name = "dtPickerExpDate";
             dtPickerExpDate.Size = new Size(252, 23);
             dtPickerExpDate.TabIndex = 12;
@@ -194,26 +194,38 @@
             btnAddProduct.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnAddProduct.Location = new Point(580, 307);
             btnAddProduct.Name = "btnAddProduct";
-            btnAddProduct.Size = new Size(97, 29);
+            btnAddProduct.Size = new Size(97, 35);
             btnAddProduct.TabIndex = 16;
             btnAddProduct.Text = "Add Product";
             btnAddProduct.UseVisualStyleBackColor = true;
             btnAddProduct.Click += btnAddProduct_Click;
             // 
-            // gridViewProductList
+            // label8
             // 
-            gridViewProductList.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            gridViewProductList.Location = new Point(12, 342);
-            gridViewProductList.Name = "gridViewProductList";
-            gridViewProductList.Size = new Size(665, 164);
-            gridViewProductList.TabIndex = 17;
+            label8.AutoSize = true;
+            label8.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label8.Location = new Point(21, 72);
+            label8.Name = "label8";
+            label8.Size = new Size(79, 20);
+            label8.TabIndex = 17;
+            label8.Text = "Product ID";
+            // 
+            // txtProductId
+            // 
+            txtProductId.BorderStyle = BorderStyle.FixedSingle;
+            txtProductId.Cursor = Cursors.Hand;
+            txtProductId.Location = new Point(119, 69);
+            txtProductId.Name = "txtProductId";
+            txtProductId.Size = new Size(252, 23);
+            txtProductId.TabIndex = 18;
             // 
             // frmAddProduct
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(689, 518);
-            Controls.Add(gridViewProductList);
+            ClientSize = new Size(689, 446);
+            Controls.Add(txtProductId);
+            Controls.Add(label8);
             Controls.Add(btnAddProduct);
             Controls.Add(richTxtDescription);
             Controls.Add(label9);
@@ -234,7 +246,6 @@
             Name = "frmAddProduct";
             Text = "Inventory";
             Load += frmAddProduct_Load;
-            ((System.ComponentModel.ISupportInitialize)gridViewProductList).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -257,6 +268,7 @@
         private Label label9;
         private RichTextBox richTxtDescription;
         private Button btnAddProduct;
-        private DataGridView gridViewProductList;
+        private Label label8;
+        private TextBox txtProductId;
     }
 }
