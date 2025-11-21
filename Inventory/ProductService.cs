@@ -19,13 +19,14 @@ namespace Inventory
             productsCollection.InsertOne(product);
         }
 
-        // read operation
+        // display operation
         public List<ProductsModel> GetAllProducts()
         {
             var productsCollection = dbConnection.GetProductsCollection();
             return productsCollection.Find(_ => true).ToList();
         }
 
+        // search
         public ProductsModel FindProductbyId(int Id)
         {
             var productsCollection = dbConnection.GetProductsCollection();

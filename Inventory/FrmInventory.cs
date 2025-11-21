@@ -45,20 +45,19 @@ namespace Inventory
 
         private void btnFind_Click(object sender, EventArgs e)
         {
-            string objectId = "ObjectId ('" + txtFind.Text.Trim() + "')";
-            ProductsModel product = productService.FindProductbyId(objectId);
+            int objectId = Convert.ToInt32(txtFind.Text);
+            var findProduct = productService.FindProductbyId(objectId);
 
-            if (string.IsNullOrEmpty(objectId))
+            if (objectId == 0)
             {
                 MessageBox.Show("Please enter a Product ID to search.", "Validation Error",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            if (product != null)
+            if (findProduct != null)
             {
-                List<ProductsModel> productList = new List<ProductsModel> { product };
-                gridViewProductList.DataSource = productList;
+                gridViewProductList.DataSource = new List<ProductsModel> { findProduct };
             }
             else
             {
@@ -69,7 +68,29 @@ namespace Inventory
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
+           
+            if (gridViewProductList.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Please select a product to delete.");
+                return;
+            }
 
+            int productId = Convert.ToInt32(gridViewProductList.SelectedRows[0].Cells["ProductId"].Value);
+
+            // Confirmation
+            var confirm = MessageBox.Show(
+                $"Are you sure you want to delete Product ID {productId}?",
+                "Confirm Delete",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning
+            );
+
+            if (confirm == DialogResult.Yes)
+            {
+                productService.DeleteProduct(productId);
+                MessageBox.Show("Product deleted successfully!");
+                DisplayProduct(); 
+            }
         }
 
         private void btnUpdate_Click(object sender, EventArgs e)
