@@ -43,9 +43,9 @@
             dtPickerExpDate = new DateTimePicker();
             label9 = new Label();
             richTxtDescription = new RichTextBox();
-            btnAddProduct = new Button();
             label8 = new Label();
             txtProductId = new TextBox();
+            btnAddProduct = new Button();
             SuspendLayout();
             // 
             // label1
@@ -188,18 +188,6 @@
             richTxtDescription.TabIndex = 15;
             richTxtDescription.Text = "";
             // 
-            // btnAddProduct
-            // 
-            btnAddProduct.Cursor = Cursors.Hand;
-            btnAddProduct.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnAddProduct.Location = new Point(580, 307);
-            btnAddProduct.Name = "btnAddProduct";
-            btnAddProduct.Size = new Size(97, 35);
-            btnAddProduct.TabIndex = 16;
-            btnAddProduct.Text = "Add Product";
-            btnAddProduct.UseVisualStyleBackColor = true;
-            btnAddProduct.Click += btnAddProduct_Click;
-            // 
             // label8
             // 
             label8.AutoSize = true;
@@ -219,11 +207,23 @@
             txtProductId.Size = new Size(252, 23);
             txtProductId.TabIndex = 18;
             // 
+            // btnAddProduct
+            // 
+            btnAddProduct.Cursor = Cursors.Hand;
+            btnAddProduct.Font = new Font("Segoe UI Semibold", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnAddProduct.Location = new Point(556, 319);
+            btnAddProduct.Name = "btnAddProduct";
+            btnAddProduct.Size = new Size(121, 46);
+            btnAddProduct.TabIndex = 16;
+            btnAddProduct.Text = "Add Product";
+            btnAddProduct.UseVisualStyleBackColor = true;
+            btnAddProduct.Click += btnAddProduct_Click;
+            // 
             // frmAddProduct
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(689, 446);
+            ClientSize = new Size(689, 395);
             Controls.Add(txtProductId);
             Controls.Add(label8);
             Controls.Add(btnAddProduct);
@@ -244,7 +244,7 @@
             Controls.Add(label1);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Name = "frmAddProduct";
-            Text = "Inventory";
+            Text = "Add Product";
             Load += frmAddProduct_Load;
             ResumeLayout(false);
             PerformLayout();
@@ -267,8 +267,8 @@
         private DateTimePicker dtPickerExpDate;
         private Label label9;
         private RichTextBox richTxtDescription;
-        private Button btnAddProduct;
         private Label label8;
         private TextBox txtProductId;
+        private Button btnAddProduct;
     }
 }
