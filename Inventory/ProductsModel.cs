@@ -7,8 +7,8 @@ namespace Inventory
     public class ProductsModel
     {
         [BsonId]
-        [BsonElement("id")]
-        public ObjectId Id { get; set; }
+        [BsonRepresentation(BsonType.Int32)]
+        public int ProductId { get; set; }
 
         [BsonElement("productName")]
         public string ProductName { get; set; }
