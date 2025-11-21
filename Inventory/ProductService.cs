@@ -1,4 +1,5 @@
-﻿using MongoDB.Driver;
+﻿using MongoDB.Bson;
+using MongoDB.Driver;
 
 namespace Inventory
 {
@@ -6,30 +7,42 @@ namespace Inventory
     public class ProductService
     {
         private DatabaseConnection dbConnection;
-        private BindingSource bindingSource;
         public ProductService() 
         { 
             dbConnection = new DatabaseConnection();
-            bindingSource = new BindingSource();
         }
 
-        // insert
+        // insert operation
         public void AddProduct(ProductsModel product)
         {
             var productsCollection = dbConnection.GetProductsCollection();
             productsCollection.InsertOne(product);
         }
 
-        // read
+        // read operation
         public List<ProductsModel> GetAllProducts()
         {
             var productsCollection = dbConnection.GetProductsCollection();
             return productsCollection.Find(_ => true).ToList();
         }
 
-        // update
+        public ProductsModel FindProductbyId(int Id)
+        {
+            var productsCollection = dbConnection.GetProductsCollection();
+            var filterSearch = Builders<ProductsModel>.Filter.Eq(x => x.ProductId, Id);
+            return productsCollection.Find(filterSearch).FirstOrDefault();
+        }
+        
+        // update operation
+       
        
 
-        // delete
+        // delete operation
+        public void DeleteProduct(int Id)
+        {
+            var productsCollection = dbConnection.GetProductsCollection();
+            var filterDelete = Builders<ProductsModel>.Filter.Eq(x => x.ProductId, Id);
+            productsCollection.DeleteOne(filterDelete);
+        }
     }
 }
