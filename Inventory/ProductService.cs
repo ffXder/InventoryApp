@@ -19,11 +19,28 @@ namespace Inventory
             productsCollection.InsertOne(product);
         }
 
+        public bool isProductIdExists(int productId)
+        {
+            var productsCollection = dbConnection.GetProductsCollection();
+            var filter = Builders<ProductsModel>.Filter.Eq(x => x.ProductId, productId);
+            
+            return productsCollection.Find(filter).Any();
+        }
+
         // display operation
         public List<ProductsModel> GetAllProducts()
         {
-            var productsCollection = dbConnection.GetProductsCollection();
-            return productsCollection.Find(_ => true).ToList();
+           try
+            {
+                var productsCollection = dbConnection.GetProductsCollection();
+                return productsCollection.Find(_ => true).ToList();
+
+            } catch (Exception e)
+            {
+                MessageBox.Show("Error retrieving products: " + e.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return new List<ProductsModel>();
+            }
+       
         }
 
         // search
