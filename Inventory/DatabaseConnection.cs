@@ -1,4 +1,5 @@
 ﻿using MongoDB.Driver;
+using DotNetEnv;
 namespace Inventory
 {
     public class DatabaseConnection
@@ -6,7 +7,8 @@ namespace Inventory
         private IMongoDatabase mongoDb;
         public DatabaseConnection()
         {
-            string url = "mongodb://localhost:27017";
+            Env.Load();
+            string url = Environment.GetEnvironmentVariable("MONGOLOCAL_URI"); //to get the env variable
             var client = new MongoClient(url);
             mongoDb = client.GetDatabase("InventoryDB");
         }
