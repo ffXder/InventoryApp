@@ -35,7 +35,22 @@ namespace Inventory
         }
         
         // update operation
-       
+        public void UpdateProduct(ProductsModel updatedProduct)
+        {
+            var productsCollection = dbConnection.GetProductsCollection();
+            var filterUpdate = Builders<ProductsModel>.Filter.Eq(x => x.ProductId, updatedProduct.ProductId);
+
+            var update = Builders<ProductsModel>.Update
+                .Set(x => x.ProductName, updatedProduct.ProductName)
+                .Set(x => x.Category, updatedProduct.Category)
+                .Set(x => x.ManufacturingDate, updatedProduct.ManufacturingDate)
+                .Set(x => x.ExpirationDate, updatedProduct.ExpirationDate)
+                .Set(x => x.SellPrice, updatedProduct.SellPrice)
+                .Set(x => x.Quantity, updatedProduct.Quantity)
+                .Set(x => x.Description, updatedProduct.Description);
+
+            productsCollection.UpdateOne(filterUpdate, update);
+        }
        
 
         // delete operation
