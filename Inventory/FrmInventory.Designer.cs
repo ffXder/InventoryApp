@@ -45,18 +45,19 @@
             gridViewProductList.AllowUserToAddRows = false;
             gridViewProductList.AllowUserToDeleteRows = false;
             gridViewProductList.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            gridViewProductList.Location = new Point(22, 180);
+            gridViewProductList.Location = new Point(22, 105);
             gridViewProductList.Name = "gridViewProductList";
             gridViewProductList.ReadOnly = true;
-            gridViewProductList.Size = new Size(672, 336);
+            gridViewProductList.Size = new Size(672, 411);
             gridViewProductList.TabIndex = 0;
+            gridViewProductList.CellContentClick += gridViewProductList_CellContentClick;
             // 
             // btnRefresh
             // 
-            btnRefresh.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnRefresh.Location = new Point(713, 180);
+            btnRefresh.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnRefresh.Location = new Point(351, 66);
             btnRefresh.Name = "btnRefresh";
-            btnRefresh.Size = new Size(75, 51);
+            btnRefresh.Size = new Size(75, 23);
             btnRefresh.TabIndex = 1;
             btnRefresh.Text = "Refresh";
             btnRefresh.UseVisualStyleBackColor = true;
@@ -65,10 +66,10 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.Font = new Font("Segoe UI", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.Location = new Point(22, 18);
             label1.Name = "label1";
-            label1.Size = new Size(144, 21);
+            label1.Size = new Size(242, 37);
             label1.TabIndex = 2;
             label1.Text = "Inventory System";
             // 
@@ -78,7 +79,7 @@
             btnAdd.FlatStyle = FlatStyle.Flat;
             btnAdd.Font = new Font("Segoe UI Semibold", 11.25F, FontStyle.Bold);
             btnAdd.ForeColor = Color.Black;
-            btnAdd.Location = new Point(42, 61);
+            btnAdd.Location = new Point(711, 105);
             btnAdd.Name = "btnAdd";
             btnAdd.Size = new Size(111, 39);
             btnAdd.TabIndex = 3;
@@ -91,7 +92,7 @@
             btnDelete.BackColor = Color.IndianRed;
             btnDelete.FlatStyle = FlatStyle.Flat;
             btnDelete.Font = new Font("Segoe UI Semibold", 11.25F, FontStyle.Bold);
-            btnDelete.Location = new Point(189, 61);
+            btnDelete.Location = new Point(711, 215);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(111, 39);
             btnDelete.TabIndex = 4;
@@ -104,9 +105,9 @@
             btnUpdate.BackColor = Color.DeepSkyBlue;
             btnUpdate.FlatStyle = FlatStyle.Flat;
             btnUpdate.Font = new Font("Segoe UI Semibold", 11.25F, FontStyle.Bold);
-            btnUpdate.Location = new Point(337, 61);
+            btnUpdate.Location = new Point(711, 159);
             btnUpdate.Name = "btnUpdate";
-            btnUpdate.Size = new Size(113, 39);
+            btnUpdate.Size = new Size(111, 39);
             btnUpdate.TabIndex = 5;
             btnUpdate.Text = "Update Item";
             btnUpdate.UseVisualStyleBackColor = false;
@@ -115,7 +116,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(42, 143);
+            label2.Location = new Point(49, 70);
             label2.Name = "label2";
             label2.Size = new Size(63, 15);
             label2.TabIndex = 6;
@@ -123,7 +124,7 @@
             // 
             // btnFind
             // 
-            btnFind.Location = new Point(263, 139);
+            btnFind.Location = new Point(270, 66);
             btnFind.Name = "btnFind";
             btnFind.Size = new Size(75, 23);
             btnFind.TabIndex = 8;
@@ -133,7 +134,7 @@
             // 
             // txtFind
             // 
-            txtFind.Location = new Point(126, 140);
+            txtFind.Location = new Point(133, 67);
             txtFind.Name = "txtFind";
             txtFind.Size = new Size(131, 23);
             txtFind.TabIndex = 9;
@@ -142,7 +143,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 528);
+            ClientSize = new Size(842, 528);
             Controls.Add(txtFind);
             Controls.Add(btnFind);
             Controls.Add(label2);
@@ -152,8 +153,9 @@
             Controls.Add(label1);
             Controls.Add(btnRefresh);
             Controls.Add(gridViewProductList);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             Name = "FrmInventory";
-            Text = "FrmInventory";
+            Text = "Inventory";
             Load += FrmInventory_Load;
             ((System.ComponentModel.ISupportInitialize)gridViewProductList).EndInit();
             ResumeLayout(false);
