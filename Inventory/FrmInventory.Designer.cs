@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmInventory));
             gridViewProductList = new DataGridView();
             btnRefresh = new Button();
             label1 = new Label();
@@ -44,6 +45,7 @@
             // 
             gridViewProductList.AllowUserToAddRows = false;
             gridViewProductList.AllowUserToDeleteRows = false;
+            gridViewProductList.BackgroundColor = SystemColors.ActiveBorder;
             gridViewProductList.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             gridViewProductList.Location = new Point(22, 105);
             gridViewProductList.Name = "gridViewProductList";
@@ -143,6 +145,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = SystemColors.Control;
             ClientSize = new Size(842, 528);
             Controls.Add(txtFind);
             Controls.Add(btnFind);
@@ -154,6 +157,7 @@
             Controls.Add(btnRefresh);
             Controls.Add(gridViewProductList);
             FormBorderStyle = FormBorderStyle.FixedSingle;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "FrmInventory";
             Text = "Inventory";
             Load += FrmInventory_Load;
