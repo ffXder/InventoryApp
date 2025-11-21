@@ -5,8 +5,8 @@ namespace Inventory
     public partial class frmAddProduct : Form
     {
         private ProductService productService;
-        private string _ProductId ,_ProductName, _Category, _ManufacturingDate, _ExpirationDate, _Description;
-        private int _Quantity;
+        private string _ProductName, _Category, _ManufacturingDate, _ExpirationDate, _Description;
+        private int _ProductId , _Quantity;
         private double _SellPrice;
 
         public frmAddProduct()
@@ -37,8 +37,8 @@ namespace Inventory
             try
             {
                 //get values from input fields
-                _ProductId = txtProductId.Text;
-                _ProductName = Product_Name(txtProductName.Text);
+                _ProductId = Convert.ToInt32(txtProductId.Text);
+                _ProductName = txtProductName.Text;
                 _Category = cbCategory.SelectedItem?.ToString() ?? "";
                 _ManufacturingDate = dtPickerMfgDate.Value.ToString("yyyy-MM-dd");
                 _ExpirationDate = dtPickerExpDate.Value.ToString("yyyy-MM-dd");
@@ -63,7 +63,7 @@ namespace Inventory
                 productService.AddProduct(newProduct);
 
 
-                MessageBox.Show("Product successfully added!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show($"Product {_ProductId} successfully added!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
 
                 //RefreshList();
