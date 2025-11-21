@@ -10,8 +10,7 @@ namespace Inventory
             InitializeComponent();
             productUpdate = products;
             productService = new ProductService();
-
-            txtProductId.Enabled = false;
+            //txtProductId.Enabled = false;
             txtProductId.Text = productUpdate.ProductId.ToString();
             txtProductName.Text = productUpdate.ProductName.ToString();
             cbCategory.Text = productUpdate.Category;
