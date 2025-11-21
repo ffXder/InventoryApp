@@ -33,14 +33,58 @@ namespace Inventory
             {
                 //get values from input fields
                 _ProductId = Convert.ToInt32(txtProductId.Text);
-                _ProductName = txtProductName.Text;
-                _Category = cbCategory.SelectedItem?.ToString() ?? "";
+                _ProductName = Product_Name(txtProductName.Text);
+                _Category = cbCategory.SelectedItem.ToString();
                 _ManufacturingDate = dtPickerMfgDate.Value.ToString("yyyy-MM-dd");
                 _ExpirationDate = dtPickerExpDate.Value.ToString("yyyy-MM-dd");
                 _Description = richTxtDescription.Text;
                 _Quantity = Quantity(txtQuantity.Text);
                 _SellPrice = SellingPrice(txtSellPrice.Text);
 
+                if (productService.FindProductbyId(_ProductId) != null)
+                {
+                    MessageBox.Show($"Product ID {_ProductId} already exists. Please use a different Product ID.", "Validation Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                if (_ProductId <= 0)
+                {
+                    MessageBox.Show("Please input ProductID.", "Validation Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(_ProductName) ||
+                    string.IsNullOrWhiteSpace(_Category) ||
+                    string.IsNullOrWhiteSpace(_ManufacturingDate) ||
+                    string.IsNullOrWhiteSpace(_ExpirationDate))
+                {
+                    MessageBox.Show("Please fill in all required fields.", "Validation Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                if (dtPickerExpDate.Value <= dtPickerMfgDate.Value)
+                {
+                    MessageBox.Show("Expiration Date must be later than Manufacturing Date.", "Validation Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                if (_Quantity < 0)
+                {
+                    MessageBox.Show("Quantity cannot be negative.", "Validation Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                if (_SellPrice < 0)
+                {
+                    MessageBox.Show("Selling Price cannot be negative.", "Validation Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
 
                 ProductsModel newProduct = new ProductsModel
                 {
@@ -54,16 +98,10 @@ namespace Inventory
                     SellPrice = _SellPrice
                 };
 
-
                 productService.AddProduct(newProduct);
 
-
                 MessageBox.Show($"Product {_ProductId} successfully added!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                FrmInventory frmInventory = new FrmInventory();
-                frmInventory.RefreshList();
                 ClearInput();
-               
             }
 
             catch (CurrencyFormatException cfEx)
@@ -74,11 +112,11 @@ namespace Inventory
             {
                 MessageBox.Show(nfEx.Message, "NumberFormatException", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
-            finally
+            catch (StringFormatException SfEx)
             {
-                Console.WriteLine("Product added successfully");
+                MessageBox.Show(SfEx.Message, "StringFormatException", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+          
         }
 
         private void frmAddProduct_Load(object sender, EventArgs e)
@@ -103,7 +141,7 @@ namespace Inventory
 
         public string Product_Name(string name)
         {
-            if (!Regex.IsMatch(name, @"^[a-zA-Z]+$"))
+            if (!Regex.IsMatch(name.Trim(), @"^[a-zA-Z\s]+$"))
             {
                 throw new StringFormatException("Product Name must contain only letters.");
             }
