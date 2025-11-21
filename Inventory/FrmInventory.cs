@@ -47,10 +47,11 @@ namespace Inventory
         private void btnFind_Click(object sender, EventArgs e)
         {
             
-            if (int.TryParse(txtFind.Text.Trim(), out int objectId))
+            if (!int.TryParse(txtFind.Text.Trim(), out int objectId))
             {
                 MessageBox.Show("Please enter a Product ID to search.", "Validation Error",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                DisplayProduct();
                 return;
             }
 
@@ -64,6 +65,7 @@ namespace Inventory
             {
                 MessageBox.Show("Product not found.", "Search Result",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
+                DisplayProduct();
             }
         }
 
