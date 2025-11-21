@@ -95,6 +95,26 @@ namespace Inventory
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
+            if (gridViewProductList.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Please select a product to update.");
+                return;
+            }
+
+            int productId = Convert.ToInt32(gridViewProductList.SelectedRows[0].Cells["ProductId"].Value);  
+
+            ProductsModel product = productService.FindProductbyId(productId);
+
+            if (product != null)
+            {
+                FrmUpdateProduct frmUpdateProduct = new FrmUpdateProduct(product);
+                frmUpdateProduct.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Product not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
 
         }
         private void btnRefresh_Click(object sender, EventArgs e)
