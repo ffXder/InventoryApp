@@ -1,0 +1,8 @@
+﻿# Ignore environment files
+.env
+
+# Ignore Visual Studio files
+*.user
+*.suo
+bin/
+obj/
