@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmUpdateProduct));
             label1 = new Label();
             label2 = new Label();
             label3 = new Label();
@@ -212,11 +213,14 @@
             // 
             // txtProductId
             // 
+            txtProductId.BackColor = SystemColors.ControlLightLight;
             txtProductId.BorderStyle = BorderStyle.FixedSingle;
             txtProductId.Cursor = Cursors.Hand;
-            txtProductId.Enabled = false;
+            txtProductId.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            txtProductId.ForeColor = SystemColors.InfoText;
             txtProductId.Location = new Point(119, 69);
             txtProductId.Name = "txtProductId";
+            txtProductId.ReadOnly = true;
             txtProductId.Size = new Size(252, 23);
             txtProductId.TabIndex = 18;
             // 
@@ -244,6 +248,7 @@
             Controls.Add(label2);
             Controls.Add(label1);
             FormBorderStyle = FormBorderStyle.FixedSingle;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "FrmUpdateProduct";
             Text = "Update Product";
             Load += FrmUpdateProduct_Load;
