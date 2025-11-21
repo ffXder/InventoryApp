@@ -42,9 +42,12 @@
             // 
             // gridViewProductList
             // 
+            gridViewProductList.AllowUserToAddRows = false;
+            gridViewProductList.AllowUserToDeleteRows = false;
             gridViewProductList.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             gridViewProductList.Location = new Point(22, 180);
             gridViewProductList.Name = "gridViewProductList";
+            gridViewProductList.ReadOnly = true;
             gridViewProductList.Size = new Size(672, 336);
             gridViewProductList.TabIndex = 0;
             // 
