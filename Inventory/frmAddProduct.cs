@@ -27,11 +27,6 @@ namespace Inventory
             richTxtDescription.Clear();
         }
 
-        public void DisplayProducts()
-        {
-
-        }
-
         public void btnAddProduct_Click(object sender, EventArgs e)
         {
             try
@@ -65,10 +60,8 @@ namespace Inventory
 
                 MessageBox.Show($"Product {_ProductId} successfully added!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-
-                //RefreshList();
-
-
+                FrmInventory frmInventory = new FrmInventory();
+                frmInventory.RefreshList();
                 ClearInput();
                
             }
@@ -105,14 +98,13 @@ namespace Inventory
             cbCategory.Items.AddRange(ListOfProductCategory);
 
             productService = new ProductService();
-            //RefreshList();
+            
         }
 
         public string Product_Name(string name)
         {
             if (!Regex.IsMatch(name, @"^[a-zA-Z]+$"))
             {
-                //Exception here
                 throw new StringFormatException("Product Name must contain only letters.");
             }
             return name;
@@ -121,7 +113,6 @@ namespace Inventory
         {
             if (!Regex.IsMatch(qty, @"^[0-9]"))
             {
-                //Exception here
                 throw new NumberFormatException("Quantity must contain only numbers.");
             }
             return Convert.ToInt32(qty);
@@ -130,7 +121,6 @@ namespace Inventory
         {
             if (!Regex.IsMatch(price.ToString(), @"^(\d*\.)?\d+$"))
             {
-                //Exception here
                 throw new CurrencyFormatException("Selling Price must be in currency format.");
             }
 
