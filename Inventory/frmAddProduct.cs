@@ -100,7 +100,7 @@ namespace Inventory
 
                 productService.AddProduct(newProduct);
 
-                MessageBox.Show($"Product {_ProductId} successfully added!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show($"Product: {_ProductId} successfully added!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 ClearInput();
             }
 
