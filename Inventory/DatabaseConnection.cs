@@ -8,7 +8,7 @@ namespace Inventory
         public DatabaseConnection()
         {
             Env.Load();
-            string url = Environment.GetEnvironmentVariable("MONGOLOCAL_URI"); //to get the env variable
+            string url = Environment.GetEnvironmentVariable("MONGOATLAS_URI"); //to get the env variable
             var client = new MongoClient(url);
             mongoDb = client.GetDatabase("InventoryDB");
         }
