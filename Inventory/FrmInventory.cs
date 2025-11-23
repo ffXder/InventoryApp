@@ -82,7 +82,7 @@ namespace Inventory
 
             // Confirmation
             var confirm = MessageBox.Show(
-                $"Are you sure you want to delete Product ID {productId}?",
+                $"Are you sure you want to delete Product ID: {productId}?",
                 "Confirm Delete",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Warning
