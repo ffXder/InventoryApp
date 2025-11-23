@@ -16,7 +16,7 @@ namespace Inventory
         public FrmInventory()
         {
             InitializeComponent();
-            gridViewProductList.CellContentDoubleClick += gridViewProductList_CellContentClick;
+            gridViewProductList.CellContentDoubleClick += gridViewProductList_CellContentClick; //register an event
         }
 
         public void RefreshList()
@@ -32,7 +32,22 @@ namespace Inventory
             gridViewProductList.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             gridViewProductList.DataSource = products;
 
+            QuantityIndicator();
         }
+
+        //color indicator for low stock
+        public void QuantityIndicator()
+        {
+            foreach (DataGridViewRow row in gridViewProductList.Rows)
+            {
+                int quantity = Convert.ToInt32(row.Cells["Quantity"].Value);
+                if (quantity < 5)
+                {
+                    row.DefaultCellStyle.BackColor = Color.IndianRed;
+                }
+            }
+        }
+
         private void FrmInventory_Load(object sender, EventArgs e)
         {
             productService = new ProductService();
@@ -42,11 +57,12 @@ namespace Inventory
         {
             frmAddProduct frmAddProduct = new frmAddProduct();
             frmAddProduct.ShowDialog();
+            DisplayProduct();
         }
 
         private void btnFind_Click(object sender, EventArgs e)
         {
-            
+
             if (!int.TryParse(txtFind.Text.Trim(), out int objectId))
             {
                 MessageBox.Show("Please enter a Product ID to search.", "Validation Error",
@@ -112,6 +128,7 @@ namespace Inventory
             {
                 FrmUpdateProduct frmUpdateProduct = new FrmUpdateProduct(product);
                 frmUpdateProduct.ShowDialog();
+                DisplayProduct(); // refreshes the table
             }
             else
             {
@@ -143,6 +160,17 @@ namespace Inventory
             {
                 MessageBox.Show("Product not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void txtSearch_TextChanged(object sender, EventArgs e)
+        {
+            string search = txtSearch.Text.Trim();
+
+            List<ProductsModel> searchProduct = productService.SearchProduct(search);
+
+            gridViewProductList.DataSource = searchProduct;
+
+            QuantityIndicator();
         }
     }
 }
