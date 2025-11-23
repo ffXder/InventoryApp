@@ -32,7 +32,7 @@ namespace Inventory
             try
             {
                 //get values from input fields
-                _ProductId = Convert.ToInt32(txtProductId.Text);
+                _ProductId = Convert.ToInt32(txtProductId);
                 _ProductName = Product_Name(txtProductName.Text);
                 _Category = cbCategory.SelectedItem.ToString();
                 _ManufacturingDate = dtPickerMfgDate.Value.ToString("yyyy-MM-dd");
