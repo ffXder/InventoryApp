@@ -51,6 +51,13 @@ namespace Inventory
             return productsCollection.Find(filterSearch).FirstOrDefault();
         }
         
+        public List<ProductsModel> SearchProduct(string search)
+        {
+            var productsCollection = dbConnection.GetProductsCollection();
+            var filterSearch = Builders<ProductsModel>.Filter.Regex(x => x.ProductName, new BsonRegularExpression(search, "i")); // regex to avoid case sensitive
+            return productsCollection.Find(filterSearch).ToList();
+        }
+
         // update operation
         public void UpdateProduct(ProductsModel updatedProduct)
         {
