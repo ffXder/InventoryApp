@@ -52,10 +52,10 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label1.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.Location = new Point(12, 18);
             label1.Name = "label1";
-            label1.Size = new Size(144, 25);
+            label1.Size = new Size(154, 25);
             label1.TabIndex = 0;
             label1.Text = "Update Product";
             // 

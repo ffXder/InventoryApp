@@ -41,6 +41,20 @@ namespace Inventory
         
         private void btnUpdateProduct_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(txtProductName.Text) || string.IsNullOrEmpty(cbCategory.Text) ||
+                string.IsNullOrEmpty(txtQuantity.Text) || string.IsNullOrEmpty(txtSellPrice.Text))
+            {
+                MessageBox.Show("Please fill in all required fields.", "Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (dtPickerExpDate.Value <= dtPickerMfgDate.Value)
+            {
+                MessageBox.Show("Expiration Date must be later than Manufacturing Date.", "Validation Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             productUpdate.ProductName = txtProductName.Text;
             productUpdate.Category = cbCategory.Text;
             productUpdate.ManufacturingDate = dtPickerMfgDate.Value.ToString("yyyy-MM-dd");
@@ -48,6 +62,7 @@ namespace Inventory
             productUpdate.Quantity = int.Parse(txtQuantity.Text);
             productUpdate.SellPrice = double.Parse(txtSellPrice.Text);
             productUpdate.Description = richTxtDescription.Text;
+
 
             productService.UpdateProduct(productUpdate);
             MessageBox.Show("Product updated successfully!", "Update Product", MessageBoxButtons.OK, MessageBoxIcon.Information);
