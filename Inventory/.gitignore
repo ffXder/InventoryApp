@@ -1,6 +1,9 @@
 ﻿# Ignore environment files
 .env
 
+# Ignore appsetting
+appsetting.json
+
 # Ignore Visual Studio files
 *.user
 *.suo
