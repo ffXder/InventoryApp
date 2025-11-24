@@ -6,7 +6,7 @@ namespace Inventory
     {
         private ProductService productService;
         private string _ProductName, _Category, _ManufacturingDate, _ExpirationDate, _Description;
-        private int _ProductId , _Quantity;
+        private int _ProductId, _Quantity;
         private double _SellPrice;
 
         public frmAddProduct()
@@ -31,8 +31,22 @@ namespace Inventory
         {
             try
             {
+
+                if (string.IsNullOrWhiteSpace(txtProductId.Text))
+                {
+                    MessageBox.Show("Please input ProductID.", "Empty Product ID",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                if (!Regex.IsMatch(txtProductId.Text.Trim(), @"^[0-9]"))
+                {
+                    MessageBox.Show("Please input the ProductID in numeric form", "Invalid Product ID",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+
                 //get values from input fields
-                _ProductId = Convert.ToInt32(txtProductId);
+                _ProductId = Convert.ToInt32(txtProductId.Text);
                 _ProductName = Product_Name(txtProductName.Text);
                 _Category = cbCategory.SelectedItem.ToString();
                 _ManufacturingDate = dtPickerMfgDate.Value.ToString("yyyy-MM-dd");
@@ -48,12 +62,6 @@ namespace Inventory
                     return;
                 }
 
-                if (_ProductId <= 0)
-                {
-                    MessageBox.Show("Please input ProductID.", "Validation Error",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
 
                 if (string.IsNullOrWhiteSpace(_ProductName) ||
                     string.IsNullOrWhiteSpace(_Category) ||
@@ -88,7 +96,7 @@ namespace Inventory
 
                 ProductsModel newProduct = new ProductsModel
                 {
-                    ProductId = _ProductId ,
+                    ProductId = _ProductId,
                     ProductName = _ProductName,
                     Category = _Category,
                     ManufacturingDate = _ManufacturingDate,
@@ -116,7 +124,7 @@ namespace Inventory
             {
                 MessageBox.Show(SfEx.Message, "StringFormatException", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-          
+
         }
 
         private void frmAddProduct_Load(object sender, EventArgs e)
@@ -136,9 +144,10 @@ namespace Inventory
             cbCategory.Items.AddRange(ListOfProductCategory);
 
             productService = new ProductService();
-            
+
         }
 
+        // custom exceptions
         public string Product_Name(string name)
         {
             if (!Regex.IsMatch(name.Trim(), @"^[a-zA-Z\s]+$"))
@@ -165,6 +174,9 @@ namespace Inventory
             return Convert.ToDouble(price);
         }
 
-
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

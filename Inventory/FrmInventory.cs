@@ -43,7 +43,13 @@ namespace Inventory
                 int quantity = Convert.ToInt32(row.Cells["Quantity"].Value);
                 if (quantity < 5)
                 {
-                    row.DefaultCellStyle.BackColor = Color.IndianRed;
+                    // if the quantity is low it will indicate red
+                    //row.DefaultCellStyle.BackColor = Color.IndianRed;
+                    row.Cells["Quantity"].Style.BackColor = Color.IndianRed;
+                }
+                else if (quantity >= 5 && quantity < 10)
+                {
+                    row.Cells["Quantity"].Style.BackColor = Color.LightSalmon;
                 }
             }
         }
@@ -172,5 +178,17 @@ namespace Inventory
 
             QuantityIndicator();
         }
+
+        //close button
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Are you sure you want to close?", "Close Inventory", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                this.Close();
+            }
+        }
+
     }
 }
