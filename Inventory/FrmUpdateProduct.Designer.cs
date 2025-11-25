@@ -281,6 +281,7 @@
             FormBorderStyle = FormBorderStyle.None;
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "FrmUpdateProduct";
+            StartPosition = FormStartPosition.CenterParent;
             Text = "Update Product";
             Load += FrmUpdateProduct_Load;
             ResumeLayout(false);
