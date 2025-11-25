@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson;
+﻿using System.Text.RegularExpressions;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace Inventory
@@ -44,17 +45,20 @@ namespace Inventory
         }
 
         // search
-        public ProductsModel FindProductbyId(int Id)
+        public ProductsModel FindProductbyId(int productId)
         {
             var productsCollection = dbConnection.GetProductsCollection();
-            var filterSearch = Builders<ProductsModel>.Filter.Eq(x => x.ProductId, Id);
+            var filterSearch = Builders<ProductsModel>.Filter.Eq(x => x.ProductId, productId);
             return productsCollection.Find(filterSearch).FirstOrDefault();
         }
         
         public List<ProductsModel> SearchProduct(string search)
         {
-            var productsCollection = dbConnection.GetProductsCollection();
-            var filterSearch = Builders<ProductsModel>.Filter.Regex(x => x.ProductName, new BsonRegularExpression(search, "i")); // regex to avoid case sensitive
+            var productsCollection = dbConnection.GetProductsCollection(); 
+
+            string safeSearch = Regex.Escape(search); // to avoid regex error when typing special characters
+
+            var filterSearch = Builders<ProductsModel>.Filter.Regex(x => x.ProductName, new BsonRegularExpression(safeSearch, "i")); // regex to avoid case sensitive
             return productsCollection.Find(filterSearch).ToList();
         }
 
@@ -76,12 +80,52 @@ namespace Inventory
             productsCollection.UpdateOne(filterUpdate, update);
         }
        
-
-        // delete operation
-        public void DeleteProduct(int Id)
+        public void UpdateProductQuantity(int productId, int newQuantity)
         {
             var productsCollection = dbConnection.GetProductsCollection();
-            var filterDelete = Builders<ProductsModel>.Filter.Eq(x => x.ProductId, Id);
+            var filterUpdate = Builders<ProductsModel>.Filter.Eq(x => x.ProductId, productId);
+            var update = Builders<ProductsModel>.Update
+                .Set(x => x.Quantity, newQuantity);
+
+            productsCollection.UpdateOne(filterUpdate, update);
+        }
+
+        public void ProductStatus()
+        {
+            var productsCollection = dbConnection.GetProductsCollection();
+            var findAll = productsCollection.Find(_ => true).ToList();
+
+            string status;
+
+            foreach (var row in findAll)
+            {
+
+                if (row.Quantity == 0)
+                {
+                    status = "Out of Stock";
+                } 
+                else if (row.Quantity <= 5)
+                {
+                    status = "Low Stock";
+                }
+                else
+                {
+                    status = "Available";
+                }
+
+                var filterId = Builders<ProductsModel>.Filter.Eq(x => x.ProductId, row.ProductId);
+                var setStatus = Builders<ProductsModel>.Update.Set(x => x.Status, status);
+
+                productsCollection.UpdateOne(filterId, setStatus);
+            }
+
+        }
+
+        // delete operation
+        public void DeleteProduct(int productId)
+        {
+            var productsCollection = dbConnection.GetProductsCollection();
+            var filterDelete = Builders<ProductsModel>.Filter.Eq(x => x.ProductId, productId);
             productsCollection.DeleteOne(filterDelete);
         }
     }
