@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MongoDB.Driver;
 
 namespace Inventory
 {
@@ -18,12 +19,16 @@ namespace Inventory
             InitializeComponent();
             gridViewProductList.CellContentDoubleClick += gridViewProductList_CellContentClick; //register an event
         }
+        private void FrmInventory_Load(object sender, EventArgs e)
+        {
+            productService = new ProductService();
+            DisplayProduct();
+        }
 
         public void RefreshList()
         {
-            List<ProductsModel> products = productService.GetAllProducts();
-            gridViewProductList.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            gridViewProductList.DataSource = products;
+            productService.ProductStatus();
+            DisplayProduct();
         }
 
         public void DisplayProduct()
@@ -31,39 +36,37 @@ namespace Inventory
             List<ProductsModel> products = productService.GetAllProducts();
             gridViewProductList.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             gridViewProductList.DataSource = products;
-
-            QuantityIndicator();
+            TableIndicator();
         }
 
         //color indicator for low stock
-        public void QuantityIndicator()
+        public void TableIndicator()
         {
             foreach (DataGridViewRow row in gridViewProductList.Rows)
             {
                 int quantity = Convert.ToInt32(row.Cells["Quantity"].Value);
-                if (quantity < 5)
+                //DateTime exp = DateTime.Parse(row.Cells["ExpirationDate"].Value.ToString());
+
+                if (quantity == 0 )
                 {
                     // if the quantity is low it will indicate red
-                    //row.DefaultCellStyle.BackColor = Color.IndianRed;
-                    row.Cells["Quantity"].Style.BackColor = Color.IndianRed;
+                    row.DefaultCellStyle.BackColor = Color.IndianRed;
+                    row.Cells["Quantity"].Style.BackColor = Color.IndianRed;  
+
                 }
-                else if (quantity >= 5 && quantity < 10)
+                else if (quantity <= 5)
                 {
+                    row.DefaultCellStyle.BackColor = Color.LightSalmon;
                     row.Cells["Quantity"].Style.BackColor = Color.LightSalmon;
                 }
             }
         }
 
-        private void FrmInventory_Load(object sender, EventArgs e)
-        {
-            productService = new ProductService();
-            DisplayProduct();
-        }
         private void btnAdd_Click(object sender, EventArgs e)
         {
             frmAddProduct frmAddProduct = new frmAddProduct();
             frmAddProduct.ShowDialog();
-            DisplayProduct();
+            RefreshList();
         }
 
         private void btnFind_Click(object sender, EventArgs e)
@@ -73,7 +76,7 @@ namespace Inventory
             {
                 MessageBox.Show("Please enter a Product ID to search.", "Validation Error",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                DisplayProduct();
+                RefreshList();
                 return;
             }
 
@@ -87,7 +90,7 @@ namespace Inventory
             {
                 MessageBox.Show("Product not found.", "Search Result",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
-                DisplayProduct();
+                RefreshList();
             }
         }
 
@@ -114,7 +117,7 @@ namespace Inventory
             {
                 productService.DeleteProduct(productId);
                 MessageBox.Show("Product deleted successfully!");
-                DisplayProduct();
+                RefreshList();
             }
         }
 
@@ -134,7 +137,7 @@ namespace Inventory
             {
                 FrmUpdateProduct frmUpdateProduct = new FrmUpdateProduct(product);
                 frmUpdateProduct.ShowDialog();
-                DisplayProduct(); // refreshes the table
+                RefreshList(); // refreshes the table
             }
             else
             {
@@ -145,7 +148,7 @@ namespace Inventory
         }
         private void btnRefresh_Click(object sender, EventArgs e)
         {
-            DisplayProduct();
+            RefreshList();
         }
 
         //double click the cell to update 
@@ -176,9 +179,61 @@ namespace Inventory
 
             gridViewProductList.DataSource = searchProduct;
 
-            QuantityIndicator();
+            TableIndicator();
         }
 
+
+        private void btnStockIn_Click(object sender, EventArgs e)
+        {
+            if (gridViewProductList.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Please select a product to stock in.");
+                return;
+            }
+
+            int productId = Convert.ToInt32(gridViewProductList.SelectedRows[0].Cells["ProductId"].Value);
+
+            int currentQty = Convert.ToInt32(gridViewProductList.SelectedRows[0].Cells["Quantity"].Value);
+            int addQty = (int)numStock.Value;
+
+            int newQty = currentQty + addQty;
+            productService.UpdateProductQuantity(productId, newQty);
+
+            RefreshList();
+        }
+
+        private void btnStockOut_Click(object sender, EventArgs e)
+        {
+            if (gridViewProductList.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Please select a product to stock out.");
+                return;
+            }
+
+            int productId = Convert.ToInt32(gridViewProductList.SelectedRows[0].Cells["ProductId"].Value);
+
+            int currentQty = Convert.ToInt32(gridViewProductList.SelectedRows[0].Cells["Quantity"].Value);
+            int subractQty = (int)numStock.Value;
+
+            if (currentQty == 0)
+            {
+                MessageBox.Show("Cannot remove stock because there is no stock available", "No Available Stock", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (subractQty > currentQty)
+            {
+                MessageBox.Show("Cannot remove stock because there is not enough stock", "Not Enough", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            int newQty = currentQty - subractQty;
+
+            productService.UpdateProductQuantity(productId, newQty);
+
+            RefreshList();
+        }
+        
         //close button
         private void btnClose_Click(object sender, EventArgs e)
         {
@@ -189,6 +244,5 @@ namespace Inventory
                 this.Close();
             }
         }
-
     }
 }
