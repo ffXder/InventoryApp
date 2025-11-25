@@ -279,6 +279,7 @@
             FormBorderStyle = FormBorderStyle.None;
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "frmAddProduct";
+            StartPosition = FormStartPosition.CenterParent;
             Text = "Add Product";
             Load += frmAddProduct_Load;
             ResumeLayout(false);
