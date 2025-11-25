@@ -28,6 +28,9 @@ namespace Inventory
         [BsonElement("quantity")]
         public int Quantity { get; set; }
 
+        [BsonElement("status")]
+        public string Status { get; set; }
+
         [BsonElement("description")]
         public string Description { get; set; }
 
