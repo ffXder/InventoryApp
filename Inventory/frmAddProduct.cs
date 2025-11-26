@@ -80,7 +80,7 @@ namespace Inventory
                     return;
                 }
 
-                if (_Quantity < 0)
+                if (_Quantity <= 0)
                 {
                     MessageBox.Show("Quantity cannot be negative.", "Validation Error",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
