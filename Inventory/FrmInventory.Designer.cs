@@ -50,6 +50,7 @@
             panel2 = new Panel();
             btnClose = new Button();
             pictureBox1 = new PictureBox();
+            label4 = new Label();
             ((System.ComponentModel.ISupportInitialize)gridViewProductList).BeginInit();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numStock).BeginInit();
@@ -217,6 +218,7 @@
             panel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
             panel1.BackColor = Color.SteelBlue;
             panel1.BackgroundImageLayout = ImageLayout.None;
+            panel1.Controls.Add(label4);
             panel1.Controls.Add(btnStockOut);
             panel1.Controls.Add(numStock);
             panel1.Controls.Add(btnStockIn);
@@ -232,7 +234,7 @@
             // 
             btnStockOut.BackColor = Color.White;
             btnStockOut.Font = new Font("Poppins SemiBold", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnStockOut.Location = new Point(23, 336);
+            btnStockOut.Location = new Point(23, 367);
             btnStockOut.Name = "btnStockOut";
             btnStockOut.Size = new Size(131, 39);
             btnStockOut.TabIndex = 14;
@@ -243,7 +245,7 @@
             // numStock
             // 
             numStock.Font = new Font("Poppins", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            numStock.Location = new Point(23, 250);
+            numStock.Location = new Point(23, 291);
             numStock.Name = "numStock";
             numStock.Size = new Size(131, 25);
             numStock.TabIndex = 13;
@@ -252,7 +254,7 @@
             // 
             btnStockIn.BackColor = Color.White;
             btnStockIn.Font = new Font("Poppins SemiBold", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnStockIn.Location = new Point(23, 291);
+            btnStockIn.Location = new Point(23, 322);
             btnStockIn.Name = "btnStockIn";
             btnStockIn.Size = new Size(131, 39);
             btnStockIn.TabIndex = 6;
@@ -297,6 +299,16 @@
             pictureBox1.TabIndex = 3;
             pictureBox1.TabStop = false;
             // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Font = new Font("Poppins", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label4.Location = new Point(23, 262);
+            label4.Name = "label4";
+            label4.Size = new Size(142, 26);
+            label4.TabIndex = 15;
+            label4.Text = "Change Quantity";
+            // 
             // FrmInventory
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -320,6 +332,7 @@
             Load += FrmInventory_Load;
             ((System.ComponentModel.ISupportInitialize)gridViewProductList).EndInit();
             panel1.ResumeLayout(false);
+            panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)numStock).EndInit();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
@@ -348,5 +361,6 @@
         private PictureBox pictureBox1;
         private Button btnClose;
         private Button btnStockOut;
+        private Label label4;
     }
 }
