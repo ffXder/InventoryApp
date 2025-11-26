@@ -169,6 +169,7 @@
             // 
             // dtPickerMfgDate
             // 
+            dtPickerMfgDate.CalendarFont = new Font("Poppins", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             dtPickerMfgDate.Cursor = Cursors.Hand;
             dtPickerMfgDate.Font = new Font("Poppins", 9F);
             dtPickerMfgDate.Location = new Point(135, 189);
