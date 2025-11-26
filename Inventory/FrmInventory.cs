@@ -169,6 +169,7 @@ namespace Inventory
             {
                 MessageBox.Show("Product not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            RefreshList();
         }
 
         private void txtSearch_TextChanged(object sender, EventArgs e)
